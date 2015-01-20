@@ -1,0 +1,82 @@
+<program> --> <function-list>
+
+<function-list> --> <function> \n <newline-list> <function-list>
+<function-list> --> ε
+
+<newline-list> --> \n <new-line-list>
+<newline-list> --> ε
+
+<function> --> <ident> <arg-list> '=' <expr>
+
+<expr> --> <part><e-list>
+
+<e-list> --> <binop><expr>
+<e-list> --> ε
+
+<part> --> <primary> <e-list>
+<part> --> (<part>)
+
+<expr-list> --> <expr> <expr-list-more>
+
+<expr-list-more> --> <expr> <expr-list-more>
+<expr-list-more> --> ε
+
+<primary> --> <string>
+<primary> --> <number>
+<primary> --> <array>
+<primary> --> <function-call>
+
+<primary-list> --> <primary> <primary-list>
+<primary-list> --> ε
+
+<function-call> --> <ident> <expr-list-more>
+
+
+<arg-list> --> <arg> <arg-list>
+<arg-list> --> ε
+
+<arg> --> <string>
+<arg> --> <number>
+<arg> --> <ident>
+<arg> --> <array-arg>
+<arg> --> '_'
+
+<string> --> " [^"^\n^r]+ "
+<number> --> 0[b][01]+|0[x][0-9a-fA-F]+|[0-9]+
+<ident> ---> [a-zA-Z]\w*
+<array> --> '{' <primary-list> '}'
+<array-arg> --> '{' <arg-list> '}'
+
+<more> --> '...'
+
+<binop> --> [^\w^\n^\s]+
+
+
+
+
+
+
+
+f 0 0 0 1 = 1
+f x y z 1 = x + y + z
+f _ _ _ 0 = 2
+
+f x y | x < 5 =
+                           |
+      | x > 5 println "hello2"
+      | x = 5 println "hello3"
+
+f "s" = somefunc 2 a
+f a =
+
+
+f {a, b} =
+
+fact 0 = 1
+fact n = fact n-1
+
+facttail 0 t = t
+facttail n t = fact (n - 1) (t * n)
+
+
+
